@@ -9,8 +9,6 @@
 
 import loading from "./components/Loading.vue";
 
-import store from './store/index'
-
 export default {
 	data(){
 		return{
@@ -18,7 +16,7 @@ export default {
 	},
 	computed: {
     	loadingShow () {
-	    	return store.state.loadingState
+	    	return this.$store.state.loadingState
     	}
   	},
   	components:{

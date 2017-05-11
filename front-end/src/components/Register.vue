@@ -22,7 +22,6 @@
 <script>
 
 const md5 = require('md5-js');
-import store from './../store/index';
 
 export default {
   data () {
@@ -57,7 +56,7 @@ export default {
           let msg = result.body.msg;
           this.$swal(msg);
         },res=>{
-          store.commit('showLoading');
+          this.$store.commit('showLoading');
         })
       }
   }
