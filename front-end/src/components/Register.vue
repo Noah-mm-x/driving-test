@@ -1,34 +1,68 @@
 <template>
   <div class="body">
-      <div class="register-content">
-        <div class="register-info">欢迎注册</div>
-        <div class="name-box">
-          <i class="iconfont icon-yonghu"></i>
-          <input type="text" placeholder="用户名">
-        </div>
-        <div class="pwd-box">
-          <i class="iconfont icon-123shouyexinxibaomi"></i>
-          <input type="text" placeholder="密码">
-        </div>
-        <div class="confirm-pwd-box">
-          <i class="iconfont icon-123shouyexinxibaomi"></i>
-          <input type="text" placeholder="确认密码">
-        </div>
-        <a class="register-btn" href="javascript:;">注册</a>
+    <div class="register-content">
+      <div class="register-info">欢迎注册</div>
+      <div class="name-box">
+        <i class="iconfont icon-yonghu"></i>
+        <input type="text" placeholder="用户名" v-model:value="name">
       </div>
+      <div class="pwd-box">
+        <i class="iconfont icon-123shouyexinxibaomi"></i>
+        <input type="password" placeholder="密码" v-model:value="pwd">
+      </div>
+      <div class="confirm-pwd-box">
+        <i class="iconfont icon-123shouyexinxibaomi"></i>
+        <input type="password" placeholder="确认密码" v-model:value="confirmPwd">
+      </div>
+      <a class="register-btn" @click="register" href="javascript:;">注册</a>
     </div>
+  </div>
 </template>
 
 <script>
+
+const md5 = require('md5-js');
+import store from './../store/index';
+
 export default {
   data () {
     return {
+      apiUrl:'http://localhost:3000/users/register',
+      name:'',
+      pwd:'',
+      confirmPwd:'',
+      loadingShow:false
     }
   },
   methods:{
-      
+      register(){
+        if(this.name==""|| this.name==null || this.name==undefined){
+          this.$swal('用户名不能为空');
+          return false;
+        }
+        if(this.pwd==""|| this.pwd==null || this.pwd==undefined){
+          this.$swal('密码不能为空');
+          return false;
+        }
+        if(this.confirmPwd==""|| this.confirmPwd==null || this.confirmPwd==undefined){
+          this.$swal('确认密码不能为空');
+          return false;
+        }
+        this.$http.post(this.apiUrl,{
+          name:this.name,
+          pwd:md5(this.pwd),
+          confirmPwd:(this.confirmPwd)
+        }).then(result =>{
+          let state = result.body.state;
+          let msg = result.body.msg;
+          this.$swal(msg);
+        },res=>{
+          store.commit('showLoading');
+        })
+      }
   }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

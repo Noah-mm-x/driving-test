@@ -1,12 +1,29 @@
 <template>
   <div id="app">
+    <loading v-show="loadingShow"></loading>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+
+import loading from "./components/Loading.vue";
+
+import store from './store/index'
+
 export default {
-  name: 'app'
+	data(){
+		return{
+		}
+	},
+	computed: {
+    	loadingShow () {
+	    	return store.state.loadingState
+    	}
+  	},
+  	components:{
+  		loading
+  	}
 }
 </script>
 

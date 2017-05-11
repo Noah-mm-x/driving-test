@@ -4,15 +4,29 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueResource from 'vue-resource' 
-import Less from 'less'
+import VueSweetAlert from 'vue-sweetalert'
+import Vuex from 'vuex'
+import store from './store/index'
 
 Vue.use(VueResource);
-Vue.use(Less);
+Vue.use(VueSweetAlert);
+Vue.use(Vuex);
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
+
+Vue.http.interceptors.push((request, next) => {
+    store.commit('showLoading');
+    console.log('请求中...');
+    next((response) => {
+        store.commit('hiddenLoading');
+    	console.log('请求结束...');
+        return response
+    });
+});
