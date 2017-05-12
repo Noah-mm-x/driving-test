@@ -5,27 +5,53 @@
         <div class="login-content">
           <div class="name-box">
             <i class="iconfont icon-yonghu"></i>
-            <input type="text" placeholder="用户名">
+            <input type="text" placeholder="用户名" v-model:value="name">
           </div>
           <div class="pwd-box">
             <i class="iconfont icon-123shouyexinxibaomi"></i>
-            <input type="text" placeholder="密码">
+            <input type="text" placeholder="密码" v-model:value="pwd">
           </div>
           <a class="jump-to-register" href="javascript:;">还没账号？注册</a>
-          <a class="login-btn" href="javascript:;">登录</a>
+          <a class="login-btn" @click="login" href="javascript:;">登录</a>
         </div>
       </div>
   </div>
 </template>
 
 <script>
+
+const md5 = require('md5-js');
+
 export default {
   data () {
     return {
+      apiUrl:'http://localhost:3000/users/login',
+      name:'',
+      pwd:''
     }
   },
   methods:{
-      
+      login(){
+        if(this.name==""|| this.name==null || this.name==undefined){
+          this.$swal('用户名不能为空');
+          return false;
+        }
+        if(this.pwd==""|| this.pwd==null || this.pwd==undefined){
+          this.$swal('密码不能为空');
+          return false;
+        }
+        this.$http.post(this.apiUrl,{
+          name:this.name,
+          pwd:md5(this.pwd)
+        }).then(result =>{
+          let state = result.body.state;
+          let msg = result.body.msg;
+          console.log(msg)
+          this.$swal(msg);
+        },res=>{
+          this.$store.commit('showLoading');
+        })
+      }
   }
 }
 </script>

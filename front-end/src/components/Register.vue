@@ -29,8 +29,7 @@ export default {
       apiUrl:'http://localhost:3000/users/register',
       name:'',
       pwd:'',
-      confirmPwd:'',
-      loadingShow:false
+      confirmPwd:''
     }
   },
   methods:{
