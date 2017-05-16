@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <loading v-show="loadingShow"></loading>
+    <app-header v-if='$route.name!="login" && $route.name!="register"'></app-header>
     <router-view></router-view>
   </div>
 </template>
@@ -8,6 +9,7 @@
 <script>
 
 import loading from "./components/Loading.vue";
+import appHeader from "./components/Header.vue";
 
 export default {
 	data(){
@@ -20,7 +22,8 @@ export default {
     	}
   	},
   	components:{
-  		loading
+  		loading,
+		appHeader
   	}
 }
 </script>
