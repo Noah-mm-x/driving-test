@@ -12,8 +12,8 @@
           <li v-for='(nav,index) in navs' :class="{'active':index==0}"><a :href="nav.link">{{nav.txt}}</a></li>
         </ul>
         <ul class="user-box">
-          <li><a href="javascript:;">登录</a></li>
-          <li><a href="javascript:;">注册</a></li>
+          <li><a href="javascript:;" @click="linkToLogin">登录</a></li>
+          <li><a href="javascript:;" @click="linkToRegister">注册</a></li>
         </ul>
       </div>
       <div class="bottom-bar">
@@ -38,7 +38,12 @@ export default {
     }
   },
   methods:{
- 
+    linkToLogin(){
+      this.$router.push({ name:'login'})
+    },
+    linkToRegister(){
+      this.$router.push({ name:'register'})
+    }
   }
 }
 </script>

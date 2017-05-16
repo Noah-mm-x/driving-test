@@ -11,7 +11,7 @@
             <i class="iconfont icon-123shouyexinxibaomi"></i>
             <input type="text" placeholder="密码" v-model:value="pwd">
           </div>
-          <a class="jump-to-register" @click="jumpToRegister" href="javascript:;">还没账号？注册</a>
+          <a class="jump-to-register" @click="linkToRegister" href="javascript:;">还没账号？注册</a>
           <a class="login-btn" @click="login" href="javascript:;">登录</a>
         </div>
       </div>
@@ -31,8 +31,8 @@ export default {
     }
   },
   methods:{
-      jumpToRegister(){
-          this.$router.push('/user/register')
+      linkToRegister(){
+          this.$router.push({name:'register'})
       },
       login(){
         if(this.name==""|| this.name==null || this.name==undefined){

@@ -23,7 +23,7 @@ export default {
   	},
   	components:{
   		loading,
-		appHeader
+		  appHeader
   	}
 }
 </script>

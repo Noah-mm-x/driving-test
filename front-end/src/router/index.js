@@ -19,3 +19,5 @@ export default new Router({
     {name:'header',path: '/header',component: Header},
   ]
 })
+
+
