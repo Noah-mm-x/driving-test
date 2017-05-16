@@ -166,7 +166,7 @@ export default {
       margin-left: 316px;
       margin-top: 18px;
       margin-bottom: 18px;
-      background: -webkit-linear-gradient(top, #cdedae , #639a61);
+      background: -webkit-linear-gradient(top, lighten(#75a768,20%) , #75a768);
     }
   }
 }

@@ -11,7 +11,7 @@
             <i class="iconfont icon-123shouyexinxibaomi"></i>
             <input type="text" placeholder="密码" v-model:value="pwd">
           </div>
-          <a class="jump-to-register" href="javascript:;">还没账号？注册</a>
+          <a class="jump-to-register" @click="jumpToRegister" href="javascript:;">还没账号？注册</a>
           <a class="login-btn" @click="login" href="javascript:;">登录</a>
         </div>
       </div>
@@ -31,6 +31,9 @@ export default {
     }
   },
   methods:{
+      jumpToRegister(){
+          this.$router.push('/user/register')
+      },
       login(){
         if(this.name==""|| this.name==null || this.name==undefined){
           this.$swal('用户名不能为空');
@@ -156,7 +159,7 @@ export default {
         margin-left: 316px;
         margin-top: 18px;
         margin-bottom: 18px;
-        background: -webkit-linear-gradient(top, #cdedae , #639a61);
+        background: -webkit-linear-gradient(top, lighten(#75a768,20%) , #75a768);
       }
     }
   }
