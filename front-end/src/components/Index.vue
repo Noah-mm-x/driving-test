@@ -3,13 +3,21 @@
     <div class="sidebar">
       <ul>
         <li class="side-title">车辆选择</li>
-        <li v-for='(item,index) in sideList' @mouseover='sideOver(index)' @mouseout='sideOut(index)'>
-          <router-link to="main">
-            <i class="iconside" :class="item.icon"></i><p>{{item.type}}</p>
-           </router-link> 
+        <li v-for='(item,index) in sideList'
+            :class = "{active:index==selectCarIndex}"
+            @click = 'selectCar(index)'
+            @mouseover='sideOver(index)'
+            @mouseout='sideOut(index)'>
+          <router-link :to='item.link'>
+            <i class="iconside"
+               :class="[index==selectCarIndex ? item.iconHover : item.icon]">
+            </i>
+            <p>{{item.type}}</p>
+          </router-link>
         </li>
       </ul>
     </div>
+    <router-view :type="sideList[selectCarIndex].type"></router-view>
   </div>
 </template>
 
@@ -18,15 +26,20 @@ export default {
   name: 'hello',
   data () {
     return {
+      selectCarIndex:0,
       sideList:[
-        {icon:'icon-small-car',type:'小车'},
-        {icon:'icon-small-truck',type:'货车'},
-        {icon:'icon-small-bus',type:'客车'},
-        {icon:'icon-small-motorcycle',type:'摩托车'}
+        {icon:'icon-small-car',iconHover:'icon-small-hover-car',type:'小车',link:'/car'},
+        {icon:'icon-small-truck',iconHover:'icon-small-hover-truck',type:'货车',link:'/truck'},
+        {icon:'icon-small-bus',iconHover:'icon-small-hover-bus',type:'客车',link:'/bus'},
+        {icon:'icon-small-motorcycle',iconHover:'icon-small-hover-motorcycle',type:'摩托车',link:'/motorcycle'}
       ]
     }
   },
   methods:{
+      selectCar(index){
+        let oIndex = index;
+        this.selectCarIndex = oIndex;
+      },
       sideOver(index){
         let oIndex = index;
         if(this.sideList[oIndex].icon.indexOf('small-')!=-1) this.sideList[oIndex].icon = this.sideList[oIndex].icon.replace('small-','small-hover-');
@@ -35,6 +48,9 @@ export default {
         let oIndex = index;
         if(this.sideList[oIndex].icon.indexOf('hover-')!=-1) this.sideList[oIndex].icon = this.sideList[oIndex].icon.replace('hover-','');
       }
+  },
+  computed:{
+
   }
 }
 </script>

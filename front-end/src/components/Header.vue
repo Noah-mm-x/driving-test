@@ -163,6 +163,7 @@ export default {
       font-weight: 800;
       text-indent: 30px;
       line-height: 60px;
+      border-bottom: 1px solid #eeeeee;
     }
   }
 }
