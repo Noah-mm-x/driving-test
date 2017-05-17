@@ -145,7 +145,7 @@ export default {
     box-sizing: border-box;
     .side{
       float: left;
-      width: 214px;
+      width: 244px;
       height: 100%;
       background-color: #62bbc3;
       font-size: 16px;
