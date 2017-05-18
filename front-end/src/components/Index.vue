@@ -17,7 +17,7 @@
         </li>
       </ul>
     </div>
-    <router-view :type="sideList[selectCarIndex].type"></router-view>
+    <router-view :type="sideList[selectCarIndex].type" :typeId="selectCarIndex"></router-view>
   </div>
 </template>
 
@@ -72,6 +72,7 @@ export default {
       width: 100%;
       min-height: 46px;
       border: 1px solid #e6e6e6;
+      border-top: none;
       li.side-title{
         width: 100%;
         height: 46px;
@@ -80,6 +81,7 @@ export default {
         line-height: 46px;
         font-size: 16px;
         color: #a0a0a0;
+        border-bottom: 1px solid #e6e6e6;
       }
       li:not(:first-child){
         margin: 12px auto 0;

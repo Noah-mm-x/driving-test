@@ -51,8 +51,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 
-@import './../assets/css/common.less';
-
 @images : './../assets/images';
 
 .header{
