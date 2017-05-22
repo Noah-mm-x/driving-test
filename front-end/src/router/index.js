@@ -6,35 +6,41 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Loading from '@/components/Loading'
 import Header from '@/components/Header'
-import IndexMain from '@/components/IndexMain'
+import Type from '@/components/Type'
 
 Vue.use(Router)
 
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
     	name:'index',
     	path: '/',
     	component: Index,
-    	children:[
-    	{
-    		path: '/car',
-    		component: IndexMain
-    	},
-    	{
-    		path: '/truck',
-    		component: IndexMain
-    	},
-    	{
-    		path: '/bus',
-    		component: IndexMain
-    	},
-    	{
-    		path: '/motorcycle',
-    		component: IndexMain
-    	}
-    	]
+    },
+    {
+        name:'type',
+        path: '/type',
+        component: Type,
+        children:[
+        {
+            path: '/car',
+            component: Type
+        },
+        {
+            path: '/truck',
+            component: Type
+        },
+        {
+            path: '/bus',
+            component: Type
+        },
+        {
+            path: '/motorcycle',
+            component: Type
+        }
+        ]
     },
     {
     	name:'login',

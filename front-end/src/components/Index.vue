@@ -1,5 +1,5 @@
 <template>
-    <div class="body" v-if='show'>
+    <div class="body">
       <ul class="clearfix">
         <li v-for='(item,index) in indexList'>
           <i  class='iconcar'
@@ -11,14 +11,12 @@
         </li>
       </ul>
     </div>
-    <router-view v-else></router-view>
 </template>
 
 <script>
 export default {
   data () {
     return {
-      show:this.$route.path == '/',
       indexList:[
         {link:'/car',icon:'icon-car',con:'小车 驾驶员考试'},
         {link:'/truck',icon:'icon-truck',con:'货车 驾驶员考试'},
@@ -31,7 +29,6 @@ export default {
   },
   methods:{
     showPage(link){
-      this.show=false;
       this.$router.push(link);
     }
   },
