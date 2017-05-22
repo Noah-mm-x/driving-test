@@ -1,13 +1,20 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var MySQLStore = require('express-mysql-session')(session);
+var history = require('connect-history-api-fallback');
 
 var users = require('./routes/users');
 
 var app = express();
+app.use(history());
+
+
+// var redisStore = require('connect-redis')(session);
 
 // 跨域支持
 app.all('*',function (req, res, next) {
@@ -30,7 +37,38 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../front-end')));
 
+// session操作 redis
+// app.use(session({
+//   store: new redisStore({
+//     host: 'localhost',
+//     port: 6379,
+//     db: 2,
+//     pass: 'RedisPASS'
+//   }),
+//   secret: 'mengfanxu',
+//   saveUninitialized: false,
+//   resave: false
+// }));
+// 
+// session操作 mysql
+var options = {
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'test'
+};
+ 
+var sessionStore = new MySQLStore(options);
+ 
+app.use(session({
+    secret: 'mengfanxu',
+    store: sessionStore,
+    resave: true,
+    saveUninitialized: true
+}));
+
 app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -9,7 +9,11 @@
       </div>
       <div class="nav-box">
         <ul class="nav">
-          <li v-for='(nav,index) in navs' :class="{'active':index==0}"><a :href="nav.link">{{nav.txt}}</a></li>
+          <li v-for='(nav,index) in navs'
+             :class="{'active':index==0}"
+             >
+             <a :href="nav.link">{{nav.txt}}</a>
+          </li>
         </ul>
         <ul class="user-box">
           <li><a href="javascript:;" @click="linkToLogin">登录</a></li>
@@ -107,6 +111,7 @@ export default {
           font-size: 16px;
           color: #888888;
           line-height: 50px;
+          text-shadow: 3px 3px 3px #000;
           &:hover{
           color: #cccccc;
         }
@@ -129,6 +134,7 @@ export default {
           font-size: 16px;
           color: #888888;
           line-height: 50px;
+          text-shadow: 3px 3px 3px #000;
           &:hover{
             color: #cccccc;
           }

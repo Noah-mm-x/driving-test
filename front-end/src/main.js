@@ -26,7 +26,7 @@ Vue.http.interceptors.push((request, next) => {
     console.log('请求中...');
     next((response) => {
         store.commit('hiddenLoading');
-    	console.log('请求结束...');
+    	  console.log('请求结束...');
         return response
     });
 });

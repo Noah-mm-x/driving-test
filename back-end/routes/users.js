@@ -21,7 +21,7 @@ router.post('/register',(req,res,next)=>{
 		return con.oQuery("SELECT * FROM `users` WHERE `name`=?",[req.body.name]);
 		}).then(rows=>{
 			if(rows.length){
-				var result  = rows[0];
+				let result  = rows[0];
 				if(req.body.name == result.name){
 					res.json({state:stateCode.USER_IS_EXIST,msg:'用户已存在'});
 					con.end();
@@ -53,9 +53,16 @@ router.post('/login',(req,res,next)=>{
 		}).then(rows=>{
 			if(rows.length){
 				var result = rows[0];
-				md5(req.body.pwd)==result.pwd ? 
-					res.json({state:stateCode.OK,msg:'登录成功'}) 
-					: res.json({state: stateCode.PASSWORD_WRONG, msg: "密码错误"});
+				if(md5(req.body.pwd)==result.pwd) {
+					res.json({state:stateCode.OK,msg:'登录成功'}); 
+
+					req.session.user = req.body.name;
+					req.session.isLogin = 1;
+					console.log(req.session.user);
+					console.log(req.session.isLogin);
+				} else{
+					res.json({state: stateCode.PASSWORD_WRONG, msg: "密码错误"});
+				}
 			}else{
 				res.json({state: stateCode.NO_SUCH_USER, msg: "没有此用户"});
 			}
