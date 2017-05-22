@@ -6,7 +6,7 @@
               :class='item.icon'
           ></i>
           <router-link
-              :to="{ path:'/type'+item.link,params:{testType:item.link}}"
+              :to="{ path:'/type'+item.link,params:{testType:item.link},query:{typeId:index}}"
           >
             {{item.con}}
           </router-link>

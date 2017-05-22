@@ -8,7 +8,7 @@
           @click = 'selectCar(index)'
           @mouseover = 'sideOver(index)'
           @mouseout = 'sideOut(index)'>
-        <router-link :to='item.link'>
+        <router-link :to='"/type"+item.link'>
           <i class="iconside"
              :class="[index==selectCarIndex ? item.iconHover : item.icon]">
           </i>
@@ -58,7 +58,7 @@
 export default {
   data () {
     return {
-      selectCarIndex:0,
+      selectCarIndex:this.$route.query.typeId,
       sideList:[
         {icon:'icon-small-car',iconHover:'icon-small-hover-car',type:'小车',link:'/car'},
         {icon:'icon-small-truck',iconHover:'icon-small-hover-truck',type:'货车',link:'/truck'},
