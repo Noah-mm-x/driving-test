@@ -32,7 +32,7 @@ export default {
   data () {
     return {
       navs:[
-        {link:'javascript:;',txt:'主页'},
+        {link:'/',txt:'主页'},
         {link:'javascript:;',txt:'模拟考试'},
         {link:'javascript:;',txt:'找驾校'},
         {link:'javascript:;',txt:'找教练'},

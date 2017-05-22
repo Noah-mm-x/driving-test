@@ -5,9 +5,11 @@
           <i  class='iconcar'
               :class='item.icon'
           ></i>
-          <a  href='javarscript:;'
-              @click='showPage(item.link)'
-          >{{item.con}}</a>
+          <router-link
+              :to="{ path:'/type'+item.link,params:{testType:item.link}}"
+          >
+            {{item.con}}
+          </router-link>
         </li>
       </ul>
     </div>
@@ -28,9 +30,7 @@ export default {
     }
   },
   methods:{
-    showPage(link){
-      this.$router.push(link);
-    }
+   
   },
   computed:{
 

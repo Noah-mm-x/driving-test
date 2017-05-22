@@ -21,26 +21,8 @@ export default new Router({
     },
     {
         name:'type',
-        path: '/type',
-        component: Type,
-        children:[
-        {
-            path: '/car',
-            component: Type
-        },
-        {
-            path: '/truck',
-            component: Type
-        },
-        {
-            path: '/bus',
-            component: Type
-        },
-        {
-            path: '/motorcycle',
-            component: Type
-        }
-        ]
+        path: '/type/:testType',
+        component: Type
     },
     {
     	name:'login',
