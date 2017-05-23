@@ -1,22 +1,25 @@
 # driving-test
 
-运行方式
+## 运行方式
 
+### 后台系统
 
 打开后台目录
-`cd back-end`
+> cd back-end
 
 安装
-`npm install`
+> npm install
 
 运行
-`node bin/www`
+> node bin/www
+
+### 前台系统
 
 打开前台目录
-`cd front-end`
+> cd front-end
 
 安装
-`npm install`
+> npm install
 
 运行
-`npm run dev`
+> npm run dev
