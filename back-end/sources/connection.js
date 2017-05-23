@@ -13,25 +13,13 @@ module.exports = function () {
         database: "test"
     });
     conn.oConnect = function () {
-        return new Promise(function (resolve, reject) {
-            conn.connect(function (err) {
-                if (!err) {
-                    resolve(conn);
-                } else {
-                    reject(err);
-                }
-            })
+        return new Promise( (resolve, reject) => { 
+            conn.connect((err)=> !err ? resolve(conn) : err)
         })
     };
     conn.oQuery = function (sql, values) {
-        return new Promise(function (resolve, reject) {
-            conn.query(sql, values, function (err, rows) {
-                if (!err) {
-                    resolve(rows);
-                } else {
-                    reject(err);
-                }
-            })
+        return new Promise( (resolve, reject) => { 
+            conn.query(sql,values,(err,rows)=> !err ? resolve(rows) : reject(err))
         })
     };
     return conn;

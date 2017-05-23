@@ -18,14 +18,10 @@ export default new Vuex.Store({
       }
   	},
   	actions:{
-  	  showLoading : store =>{
-  	  	store.commit('showLoading');
-  	  },
-  	  hiddenLoading : store =>{
-  	  	store.commit('hiddenLoading');
-  	  },
-	  changePageIndex : (store,param) => {
-		store.commit('changePageIndex',param);
+  	  showLoading : store => store.commit('showLoading'),
+  	  hiddenLoading : store => store.commit('hiddenLoading'),
+	    changePageIndex : (store,param) => {
+		    store.commit('changePageIndex',param);
       }
   	}
 })
