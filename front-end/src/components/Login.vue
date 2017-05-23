@@ -47,9 +47,7 @@ export default {
           name:this.name,
           pwd:md5(this.pwd)
         }).then(result =>{
-          let state = result.body.state;
-          let msg = result.body.msg;
-          let userId = result.body.userId;
+          let [state,msg,userId] = [result.body.state,result.body.msg,result.body.userId];
           let storage = localStorage;
           if(state == 1000){
             this.$swal(msg).then((isConfirm)=>{

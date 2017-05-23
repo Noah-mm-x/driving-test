@@ -51,8 +51,7 @@ export default {
           pwd:md5(this.pwd),
           confirmPwd:(this.confirmPwd)
         }).then(result =>{
-          let state = result.body.state;
-          let msg = result.body.msg;
+          let [state,msg] = [result.body.state,result.body.msg];
           let storage = localStorage;
           if(state == 1000){
             this.$swal({
