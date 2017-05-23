@@ -10,9 +10,9 @@
       <div class="nav-box">
         <ul class="nav">
           <li v-for='(nav,index) in navs'
-             :class="{'active':index==0}"
+             :class="{'active':index==currentIndex}"
              >
-             <a :href="nav.link">{{nav.txt}}</a>
+             <a href="javascript:;" @click='switchPage(index)'>{{nav.txt}}</a>
           </li>
         </ul>
         <ul class="user-box">
@@ -38,27 +38,35 @@ export default {
     return {
       navs:[
         {link:'/',txt:'主页'},
-        {link:'javascript:;',txt:'模拟考试'},
+        {link:'/type/car',txt:'模拟考试'},
         {link:'javascript:;',txt:'找驾校'},
         {link:'javascript:;',txt:'找教练'},
         {link:'javascript:;',txt:'找陪练'}
       ],
       currentPage:'主页',
       currentUser:'',
-      isLogin:false
+      isLogin:false,
     }
   },
   mounted:function () {
-    let storage = localStorage;
-    if(storage.getItem('username')){
-      this.currentUser = storage.getItem('username');
-      this.isLogin = true;
-    };
-    if(storage.getItem('userid')){
-      console.log(storage.getItem('userid'));
-    }else{
-      console.log(22222)
-    }
+    this.$nextTick(function(){
+      let storage = localStorage;
+      if(storage.getItem('username')){
+        this.currentUser = storage.getItem('username');
+        this.isLogin = true;
+      };
+      if(storage.getItem('userid')){
+        console.log(storage.getItem('userid'));
+      }else{
+        console.log(22222)
+      }
+    })
+    
+  },
+  computed:{
+      currentIndex(){
+        return this.$store.state.currentPageIndex;
+      }
   },
   methods:{
     linkToLogin(){
@@ -71,6 +79,10 @@ export default {
       let storage = localStorage;
       storage.clear();
       this.isLogin = false;
+    },
+    switchPage(index){
+      this.$router.push(this.navs[index].link);
+      this.$store.dispatch('changePageIndex',index);
     }
   }
 }

@@ -22,10 +22,10 @@ new Vue({
 })
 
 Vue.http.interceptors.push((request, next) => {
-    store.commit('showLoading');
+    store.dispatch('showLoading');
     console.log('请求中...');
     next((response) => {
-        store.commit('hiddenLoading');
+        store.dispatch('hiddenLoading');
     	  console.log('请求结束...');
         return response
     });

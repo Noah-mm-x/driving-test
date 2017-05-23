@@ -20,11 +20,11 @@ export default {
     	loadingShow () {
 	    	return this.$store.state.loadingState
     	}
-  	},
-  	components:{
-  		loading,
-		  appHeader
-  	}
+  },
+	components:{
+		loading,
+	  appHeader
+	}
 }
 </script>
 
