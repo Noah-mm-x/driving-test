@@ -16,8 +16,9 @@
           </li>
         </ul>
         <ul class="user-box">
-          <li><a href="javascript:;" @click="linkToLogin">登录</a></li>
-          <li><a href="javascript:;" @click="linkToRegister">注册</a></li>
+          <li v-if='!isLogin'><a href="javascript:;" @click="linkToLogin">登录</a></li>
+          <li v-if='!isLogin'><a href="javascript:;" @click="linkToRegister">注册</a></li>
+          <li v-if='isLogin' ><a href="javascript:;" @click="logOut" class="user-is-login">您好，{{currentUser}}</a></li>
         </ul>
       </div>
       <div class="bottom-bar">
@@ -28,6 +29,10 @@
 </template>
 
 <script>
+
+const md5 = require('md5-js');
+// const base = require('x-base64');
+
 export default {
   data () {
     return {
@@ -38,7 +43,21 @@ export default {
         {link:'javascript:;',txt:'找教练'},
         {link:'javascript:;',txt:'找陪练'}
       ],
-      currentPage:'主页'
+      currentPage:'主页',
+      currentUser:'',
+      isLogin:false
+    }
+  },
+  mounted:function () {
+    let storage = localStorage;
+    if(storage.getItem('username')){
+      this.currentUser = storage.getItem('username');
+      this.isLogin = true;
+    };
+    if(storage.getItem('userid')){
+      console.log(storage.getItem('userid'));
+    }else{
+      console.log(22222)
     }
   },
   methods:{
@@ -47,6 +66,11 @@ export default {
     },
     linkToRegister(){
       this.$router.push({ name:'register'})
+    },
+    logOut(){
+      let storage = localStorage;
+      storage.clear();
+      this.isLogin = false;
     }
   }
 }
@@ -137,6 +161,13 @@ export default {
           text-shadow: 3px 3px 3px #000;
           &:hover{
             color: #cccccc;
+          }
+        }
+        a.user-is-login{
+          color:#fff;
+          text-shadow: none;
+          &:hover{
+            color: #fff;
           }
         }
       }

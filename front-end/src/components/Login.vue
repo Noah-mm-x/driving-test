@@ -9,10 +9,10 @@
           </div>
           <div class="pwd-box">
             <i class="iconfont icon-123shouyexinxibaomi"></i>
-            <input type="text" placeholder="密码" v-model:value="pwd">
+            <input type="text" placeholder="密码" v-model:value="pwd" @keyup.enter='login'>
           </div>
           <a class="jump-to-register" @click="linkToRegister" href="javascript:;">还没账号？注册</a>
-          <a class="login-btn" @click="login" href="javascript:;">登录</a>
+          <a class="login-btn" @click="login"  href="javascript:;">登录</a>
         </div>
       </div>
   </div>
@@ -49,8 +49,19 @@ export default {
         }).then(result =>{
           let state = result.body.state;
           let msg = result.body.msg;
-          console.log(msg)
-          this.$swal(msg);
+          let userId = result.body.userId;
+          let storage = localStorage;
+          if(state == 1000){
+            this.$swal(msg).then((isConfirm)=>{
+              if(isConfirm) {
+                this.$router.push('/');
+                storage.setItem('username', this.name);
+                storage.setItem('userid', userId);
+              }
+            })
+          }else {
+            console.log(2);
+          }
         },res=>{
           this.$store.commit('showLoading');
         })

@@ -58,7 +58,7 @@
 export default {
   data () {
     return {
-      selectCarIndex:this.$route.query.typeId,
+      selectCarIndex:this.$route.query.typeId || 0,
       sideList:[
         {icon:'icon-small-car',iconHover:'icon-small-hover-car',type:'小车',link:'/car'},
         {icon:'icon-small-truck',iconHover:'icon-small-hover-truck',type:'货车',link:'/truck'},
@@ -232,9 +232,5 @@ export default {
       }
     }
 } 
-
-
-
-
 
 </style>

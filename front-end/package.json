@@ -21,7 +21,8 @@
     "vue-router": "^2.3.1",
     "vue-sweetalert": "^0.1.17",
     "vue-validator": "^3.0.0-alpha.2",
-    "vuex": "^2.3.1"
+    "vuex": "^2.3.1",
+    "x-base64": "^1.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

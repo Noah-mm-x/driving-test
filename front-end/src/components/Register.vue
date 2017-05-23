@@ -12,7 +12,7 @@
       </div>
       <div class="confirm-pwd-box">
         <i class="iconfont icon-123shouyexinxibaomi"></i>
-        <input type="password" placeholder="确认密码" v-model:value="confirmPwd">
+        <input type="password" placeholder="确认密码" v-model:value="confirmPwd" @keyup.enter='register'>
       </div>
       <a class="register-btn" @click="register" href="javascript:;">注册</a>
     </div>
@@ -53,7 +53,19 @@ export default {
         }).then(result =>{
           let state = result.body.state;
           let msg = result.body.msg;
-          this.$swal(msg);
+          let storage = localStorage;
+          if(state == 1000){
+            this.$swal({
+              title:msg
+            }).then((isConfirm)=>{
+              if(isConfirm) {
+                this.$router.push('/');
+                storage.setItem('username', this.name);
+              }
+            })
+          }else{
+            this.$swal(msg);
+          }
         },res=>{
           this.$store.commit('showLoading');
         })
