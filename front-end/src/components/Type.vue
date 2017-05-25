@@ -58,7 +58,6 @@
 export default {
   data () {
     return {
-      selectCarIndex:this.$route.query.typeId || 0,
       sideList:[
         {icon:'icon-small-car',iconHover:'icon-small-hover-car',type:'小车',link:'/car'},
         {icon:'icon-small-truck',iconHover:'icon-small-hover-truck',type:'货车',link:'/truck'},
@@ -74,6 +73,15 @@ export default {
         {bk:'#67e1c6',icon:'icon-test-error',con:'错题练习',link:'/'},
       ]
     }
+  },
+  computed:{
+      selectCarIndex:function(){
+        return this.sideList.filter((item)=>{
+          return item.link == '/'+ this.$route.params.testType;
+        }).map((el,index)=>{
+          return this.sideList.indexOf(el);
+        });
+      }
   },
   methods:{
       selectCar(index){
