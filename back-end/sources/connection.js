@@ -14,7 +14,7 @@ module.exports = function () {
     });
     conn.oConnect = function () {
         return new Promise( (resolve, reject) => { 
-            conn.connect((err)=> !err ? resolve(conn) : err)
+            conn.connect((err)=> !err ? resolve(conn) : reject(err))
         })
     };
     conn.oQuery = function (sql, values) {
