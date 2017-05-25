@@ -4,6 +4,7 @@
     <div class="main">
         <div class="question-container">
             <div class="title-arrow subject-type">单选题</div>
+            <img class="image" src="http://ww3.sinaimg.cn/mw600/5eb4d75agw1e28yoq99yfj.jpg" alt="">
             <div class="question">
                 2/1330 机动车驾驶人造成事故后逃逸是否属于犯罪
             </div>
@@ -32,7 +33,7 @@
             </div>
         </div>
         <div class="result-container">
-          <div class="right">答对 0 题</div>
+          <div class="right" @click="showData">答对 0 题</div>
           <div class="wrong">答错 0 题</div>
           <div class="rate">正确率 0.00%</div>
           <div class="jump">共1330道题 跳转到<input type="text">题</div>
@@ -47,7 +48,23 @@
 export default {
   data () {
     return {
-
+        getDataApiUrl:'http://localhost:3000/question/car',
+        getMAXApiUrl:'http://localhost:3000/question/max'
+    }
+  },
+  methods:{
+    showData(){
+      this.$http.post(this.getDataApiUrl,{
+        id:5
+      }).then( result =>{
+        let [state,content,max] = [result.body.state,result.body.content,result.body.max];
+        if(state == 1000){
+          console.log(content);
+          console.log(max);
+        }
+      },res=>{
+          this.$store.commit('showLoading');
+      })
     }
   }
 }
@@ -99,6 +116,13 @@ export default {
         font-weight: 800;
         line-height: 39px;
         text-indent: 6px;
+      }
+      .image{
+        position: absolute;
+        top: 80px;
+        right: 80px;
+        max-height: 240px;
+        max-width: 360px;
       }
       .question{
         padding: 14px 14px 14px 80px;

@@ -9,6 +9,7 @@ var MySQLStore = require('express-mysql-session')(session);
 var history = require('connect-history-api-fallback');
 
 var users = require('./routes/users');
+var question = require('./routes/question');
 
 var app = express();
 app.use(history());
@@ -68,6 +69,7 @@ app.use(session({
 }));
 
 app.use('/users', users);
+app.use('/question', question);
 
 
 // catch 404 and forward to error handler

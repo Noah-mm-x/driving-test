@@ -19,7 +19,7 @@ router.post('/register',(req,res,next)=>{
 	}).post('/register',(req,res,next)=>{
 		let con = connection();
 		con.oConnect().then(result=>{
-		return con.oQuery("SELECT * FROM `users` WHERE `name`=?",[req.body.name]);
+			return con.oQuery("SELECT * FROM `users` WHERE `name`=?",[req.body.name]);
 		}).then(rows=>{
 			if(rows.length){
 				let result  = rows[0];
