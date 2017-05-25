@@ -7,6 +7,7 @@ import Register from '@/components/Register'
 import Loading from '@/components/Loading'
 import Header from '@/components/Header'
 import Type from '@/components/Type'
+import Question from '@/components/Question'
 
 Vue.use(Router)
 
@@ -20,11 +21,6 @@ export default new Router({
     	component: Index,
     },
     {
-        name:'type',
-        path: '/type/:testType',
-        component: Type
-    },
-    {
     	name:'login',
     	path: '/user/login',
     	component: Login
@@ -34,6 +30,17 @@ export default new Router({
     	path: '/user/register',
     	component: Register
     },
+    {
+        name:'type',
+        path: '/type/:testType',
+        component: Type
+    },
+    {
+        name:'question',
+        path: '/question',
+        component: Question
+    }
+    
   ]
 })
 
