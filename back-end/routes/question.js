@@ -26,6 +26,13 @@ router.post('/car',(req,res,next)=>{
 router.post('/insertWrong',(req,res,next)=>{
 		let con = connection();
 		con.oConnect().then(result=>{
+			return con.oQuery("SELECT * FROM `wrong` WHERE `qid`=? AND `uid`=?",[req.body.qid,req.body.uid]);
+		}).then(rows=>{
+			if(rows.length){
+				res.json({state:stateCode.FAIL}); 
+				con.end();
+			}
+		}).then(result=>{
 			return con.oQuery("SELECT * FROM `car` WHERE `id`=?",[req.body.qid]);
 		}).then(rows=>{
 			var result = rows[0];

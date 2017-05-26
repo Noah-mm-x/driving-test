@@ -145,8 +145,6 @@ export default {
           if(state == 1000){
             this.infoShow = 0;
             this.wrongNum++;
-          }else{
-            this.$swal('数据异常,请重新选择');
           }
         },res=>{
             this.$store.commit('showLoading');
