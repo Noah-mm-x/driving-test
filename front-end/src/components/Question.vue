@@ -1,12 +1,12 @@
 <template>
   <div class="body">
-    <div class="title">顺序练习</div>
+    <div class="title">{{title}}</div>
     <div class="main">
         <div class="question-container">
             <div class="title-arrow subject-type">{{subjectType}}</div>
             <img v-if='data.imgUrl' class="image" :src="data.imgUrl" alt="">
             <div class="question">
-                {{currentIndex}}/{{max}} {{data.question}}
+                {{index}}/{{max}} {{data.question}}
             </div>
             <div v-if="data.type=='1'" class="answer">
               <label>
@@ -43,9 +43,10 @@
             </div>
         </div>
         <div class="result-container">
+          <div class="right">答对 {{rightNum}} 题</div>
           <div class="wrong">答错 {{wrongNum}} 题</div>
           <div class="rate">正确率 {{rate}}%</div>
-          <div class="jump">共{{max}}道题 <!-- 跳转到<input type="text">题 --></div>
+          <div class="jump">共{{max}}道题</div>
         </div>
     </div>
   </div>
@@ -58,13 +59,14 @@ export default {
   data () {
     return {
         apiUrl:'http://localhost:3000/question/car',
-        currentIndex:'1',
+        index:'1', //当前题,根据点击下一题而增长
+        currentIndex:'1', //数据库中当前的题的位置
         data:'', 
         max:'',
         infoShow:'',
         rightNum:'0',
         wrongNum:'0',
-        totalAnswerNum:'0'
+        totalAnswerNum:'0'  //回答过的题数,根据点击选项而增长
     }
   },
   created:function () {
@@ -92,7 +94,6 @@ export default {
       })
     },
     next(){
-
       let isChecked = false;
       $('input[name=answer]').each(function(){
         if(this.checked == true){
@@ -108,17 +109,19 @@ export default {
         return false;
       }
 
-      if(this.currentIndex>=this.max){
+      this.init();
+
+      if(this.index>=this.max){
         this.$swal({
             title:'已经是最后一题',
             type:'warning'
         });
         return false;
       }
+      this.index++;
 
-      this.init();
+      this.$route.query.type == 1 ? this.currentIndex++ : this.currentIndex = this.randomQuestion[(this.index-1)];
 
-      this.currentIndex++;
       this.getData();
     },
     judge(el){
@@ -135,11 +138,21 @@ export default {
     }
   },
   computed:{
+    title:function(){
+      return this.$route.query.type == 1 ? '顺序练习' : '随机练习'
+    },
     subjectType:function(){
       return this.data.type == '1' ? '判断题' : '选择题';
     },
     rate:function(){
       return this.totalAnswerNum == '0' ? '0' :(this.rightNum / this.totalAnswerNum*100).toFixed(2);
+    },
+    randomQuestion:function(){
+      let temp = [];
+      for(let i=1,len=this.max;i<=len;i++){
+        temp.push(i);
+      }
+      return temp.sort(()=>{return Math.random()>0.5});
     }
   }
  
@@ -167,7 +180,7 @@ export default {
     &:before{
       content: "";
       position: absolute;
-      top: 17px;
+      top: 18px;
       left: 10px;
       width: 2px;
       height: 24px;

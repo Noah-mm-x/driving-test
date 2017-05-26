@@ -26,7 +26,7 @@
       <ul class="clearfix">
         <li v-for='(item,index) in boxList'>
           <router-link 
-                :to="item.link"
+                :to="{ path:item.link,query:{type:item.type}}"
                 tag="div"
                 :style='{backgroundColor:item.bk}'
           >
@@ -35,7 +35,7 @@
             ></i>
           </router-link>  
           <router-link 
-                :to="item.link"
+                :to="{ path:item.link,query:{type:item.type}}"
                 tag="a"
           >{{item.con}}</router-link>
         </li>
@@ -65,12 +65,12 @@ export default {
         {icon:'icon-small-motorcycle',iconHover:'icon-small-hover-motorcycle',type:'摩托车',link:'/motorcycle'}
       ],
       boxList:[
-        {bk:'#fcc056',icon:'icon-test-order',con:'顺序练习',link:'/question'},
-        {bk:'#fe7e4c',icon:'icon-test-random',con:'随机练习',link:'/'},
-        {bk:'#6cceec',icon:'icon-test-chapter',con:'章节练习',link:'/'},
-        {bk:'#fd6467',icon:'icon-test-special',con:'专项练习',link:'/'},
-        {bk:'#f76f93',icon:'icon-test-simulation',con:'模拟考试',link:'/'},
-        {bk:'#67e1c6',icon:'icon-test-error',con:'错题练习',link:'/'},
+        {bk:'#fcc056',icon:'icon-test-order',con:'顺序练习',link:'/question',type:'1'},
+        {bk:'#fe7e4c',icon:'icon-test-random',con:'随机练习',link:'/question',type:'2'},
+        {bk:'#6cceec',icon:'icon-test-chapter',con:'章节练习',link:'/',type:'/'},
+        {bk:'#fd6467',icon:'icon-test-special',con:'专项练习',link:'/',type:'/'},
+        {bk:'#f76f93',icon:'icon-test-simulation',con:'模拟考试',link:'/',type:'/'},
+        {bk:'#67e1c6',icon:'icon-test-error',con:'错题练习',link:'/',type:'/'},
       ]
     }
   },
