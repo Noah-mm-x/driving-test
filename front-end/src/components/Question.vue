@@ -3,40 +3,49 @@
     <div class="title">顺序练习</div>
     <div class="main">
         <div class="question-container">
-            <div class="title-arrow subject-type">单选题</div>
-            <img class="image" src="http://ww3.sinaimg.cn/mw600/5eb4d75agw1e28yoq99yfj.jpg" alt="">
+            <div class="title-arrow subject-type">{{subjectType}}</div>
+            <img v-if='data.imgUrl' class="image" :src="data.imgUrl" alt="">
             <div class="question">
-                2/1330 机动车驾驶人造成事故后逃逸是否属于犯罪
+                {{currentIndex}}/{{max}} {{data.question}}
             </div>
-            <div class="answer">
+            <div v-if="data.type=='1'" class="answer">
               <label>
-                <input type="radio" name="answer" value="A">
+                <input type="radio" name="answer" value="1" @focus='judge($event)'>
                 正确
               </label>
               <label>
-                <input type="radio" name="answer" value="B">
-                正确
-              </label>
-              <label>
-                <input type="radio" name="answer" value="C">
-                正确
-              </label>
-              <label>
-                <input type="radio" name="answer" value="D">
-                正确
+                <input type="radio" name="answer" value="2" @focus='judge($event)'>
+                错误
               </label>
             </div>
-            <div class="info right">您答错了，正确答案是：错误</div>
+            <div v-if="data.type=='2'" class="answer">
+              <label>
+                <input type="radio" name="answer" value="1" @focus='judge($event)'>
+                {{data.a}}
+              </label>
+              <label>
+                <input type="radio" name="answer" value="2" @focus='judge($event)'>
+                {{data.b}}
+              </label>
+              <label>
+                <input type="radio" name="answer" value="3" @focus='judge($event)'>
+                {{data.c}}
+              </label>
+              <label>
+                <input type="radio" name="answer" value="4" @focus='judge($event)'>
+                {{data.d}}
+              </label>
+            </div>
+            <div v-if="infoShow=='0'" class="info wrong">您答错了</div>
+            <div v-else-if="infoShow=='1'" class="info right">您答对了</div>
             <div class="submit-btns clearfix">
-                <a href="javascript:;">上一题</a>
-                <a href="javascript:;">下一题</a>
+                <a href="javascript:;" @click='next'>下一题</a>
             </div>
         </div>
         <div class="result-container">
-          <div class="right" @click="showData">答对 0 题</div>
-          <div class="wrong">答错 0 题</div>
-          <div class="rate">正确率 0.00%</div>
-          <div class="jump">共1330道题 跳转到<input type="text">题</div>
+          <div class="wrong">答错 {{wrongNum}} 题</div>
+          <div class="rate">正确率 {{rate}}%</div>
+          <div class="jump">共{{max}}道题 <!-- 跳转到<input type="text">题 --></div>
         </div>
     </div>
   </div>
@@ -48,25 +57,86 @@
 export default {
   data () {
     return {
-        getDataApiUrl:'http://localhost:3000/question/car',
-        getMAXApiUrl:'http://localhost:3000/question/max'
+        apiUrl:'http://localhost:3000/question/car',
+        currentIndex:'1',
+        data:'', 
+        max:'',
+        infoShow:'',
+        rightNum:'0',
+        wrongNum:'0',
+        totalAnswerNum:'0'
     }
   },
+  created:function () {
+    this.$nextTick(function(){
+      this.getData();
+    })
+  },
   methods:{
-    showData(){
-      this.$http.post(this.getDataApiUrl,{
-        id:5
+    init(){
+      this.infoShow = '';
+      $('input').prop({"checked": false});
+      $('input').prop({'disabled':''});
+    },
+    getData(){
+      this.$http.post(this.apiUrl,{
+        id:this.currentIndex
       }).then( result =>{
         let [state,content,max] = [result.body.state,result.body.content,result.body.max];
         if(state == 1000){
-          console.log(content);
-          console.log(max);
+          this.max = max;
+          this.data = content;
         }
       },res=>{
           this.$store.commit('showLoading');
       })
+    },
+    next(){
+
+      let isChecked = false;
+      $('input[name=answer]').each(function(){
+        if(this.checked == true){
+            isChecked = true;
+            return;
+        }
+      })
+      console.log(isChecked);
+
+      if(this.currentIndex>=this.max){
+        this.$swal({
+            title:'已经是最后一题',
+            type:'warning'
+        });
+        return false;
+      }
+
+      this.init();
+
+      this.currentIndex++;
+      this.getData();
+    },
+    judge(el){
+      let val = el.target.value;
+      $(el.target).parent().siblings().children().prop({'disabled':'disabled'});
+      if(val==this.data.right){
+        this.infoShow = 1;
+        this.rightNum++;
+      }else{
+        this.infoShow = 0;
+        this.wrongNum++;
+      }
+      this.totalAnswerNum++;
+    }
+  },
+  computed:{
+    subjectType:function(){
+      return this.data.type == '1' ? '判断题' : '选择题';
+    },
+    rate:function(){
+      return this.totalAnswerNum == '0' ? '0' :(this.rightNum / this.totalAnswerNum*100).toFixed(2);
     }
   }
+ 
 }
 </script>
 
@@ -162,8 +232,10 @@ export default {
         }
       }
       .submit-btns{
+        position: absolute;
+        top: 342px;
+        left: 0; 
         width: 100%;
-        margin-top: 68px;
         a{
           .default-btn(46px);
           display: block;

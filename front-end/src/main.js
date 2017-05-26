@@ -7,6 +7,7 @@ import VueResource from 'vue-resource'
 import VueSweetAlert from 'vue-sweetalert'
 import Vuex from 'vuex'
 import store from './store/index'
+import $ from 'jquery'
 
 Vue.use(VueResource);
 Vue.use(VueSweetAlert);
