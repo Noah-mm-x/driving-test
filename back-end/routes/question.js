@@ -16,7 +16,6 @@ router.post('/car',(req,res,next)=>{
 			return con.oQuery("SELECT * FROM `car` WHERE `id`=?", [req.body.id]);
 		}).then(rows=>{
 			var result = rows[0];
-			console.log(result);
 			res.json({state:stateCode.OK,msg:'获取成功',max:max,content:result}); 
 			con.end();
 		}).catch(error => {
@@ -24,6 +23,22 @@ router.post('/car',(req,res,next)=>{
 	    })
 	})
 
+router.post('/insertWrong',(req,res,next)=>{
+		let con = connection();
+		con.oConnect().then(result=>{
+			return con.oQuery("SELECT * FROM `car` WHERE `id`=?",[req.body.qid]);
+		}).then(rows=>{
+			var result = rows[0];
+			return con.oQuery("INSERT INTO `wrong` (`qid`,`uid`,`question`,`a`,`b`,`c`,`d`,`right`,`imgUrl`,`type`) VALUES(?,?,?,?,?,?,?,?,?,?)",
+				[req.body.qid,req.body.uid,result.question,result.a,result.b,result.c,result.d,
+				result.right,result.imgUrl,result.type]);
+		}).then(rows=>{
+			res.json({state:stateCode.OK}); 
+			con.end();
+		}).catch(error => {
+	        res.json({state: error.errno, msg: error.code});
+	    })
+	})
 
 
 module.exports = router;

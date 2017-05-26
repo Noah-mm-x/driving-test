@@ -59,6 +59,7 @@ export default {
   data () {
     return {
         apiUrl:'http://localhost:3000/question/car',
+        wrongApiUrl:'http://localhost:3000/question/insertWrong',
         index:'1', //当前题,根据点击下一题而增长
         currentIndex:'1', //数据库中当前的题的位置
         data:'', 
@@ -126,28 +127,45 @@ export default {
     },
     judge(el){
       let val = el.target.value;
+      let userid = localStorage.userid;
+      if(!userid) {
+        this.$router.push({name:'login'});
+        return false;
+      }
       $(el.target).parent().siblings().children().prop({'disabled':'disabled'});
-      if(val==this.data.right){
+      if(val==this.data.right){   
         this.infoShow = 1;
         this.rightNum++;
       }else{
-        this.infoShow = 0;
-        this.wrongNum++;
-      }
-      this.totalAnswerNum++;
+        this.$http.post(this.wrongApiUrl,{
+          qid:this.currentIndex,
+          uid:userid
+        }).then( result =>{
+          let state = result.body.state;
+          if(state == 1000){
+            this.infoShow = 0;
+            this.wrongNum++;
+          }else{
+            this.$swal('数据异常,请重新选择');
+          }
+        },res=>{
+            this.$store.commit('showLoading');
+        })
+        }
+        this.totalAnswerNum++;
     }
   },
   computed:{
-    title:function(){
+    title(){
       return this.$route.query.type == 1 ? '顺序练习' : '随机练习'
     },
-    subjectType:function(){
+    subjectType(){
       return this.data.type == '1' ? '判断题' : '选择题';
     },
-    rate:function(){
+    rate(){
       return this.totalAnswerNum == '0' ? '0' :(this.rightNum / this.totalAnswerNum*100).toFixed(2);
     },
-    randomQuestion:function(){
+    randomQuestion(){
       let temp = [];
       for(let i=1,len=this.max;i<=len;i++){
         temp.push(i);
