@@ -18,7 +18,9 @@
         <ul class="user-box">
           <li v-if='!isLogin'><a href="javascript:;" @click="linkToLogin">登录</a></li>
           <li v-if='!isLogin'><a href="javascript:;" @click="linkToRegister">注册</a></li>
-          <li v-if='isLogin' ><a href="javascript:;" @click="logOut" class="user-is-login">您好，{{currentUser}}</a></li>
+          <li v-if='isLogin' class="user-is-login"><a href="javascript:;">您好，{{currentUser}}</a></li>
+          <li v-if='isLogin' class="user-is-login"><a href="javascript:;">| 个人中心</a></li>
+          <li v-if='isLogin' class="user-is-login"><a href="javascript:;" @click='logOut'>| 退出登录</a></li>
         </ul>
       </div>
       <div class="bottom-bar">
@@ -167,7 +169,7 @@ export default {
         a{
           display: block;
           height: 50px;
-          font-size: 16px;
+          font-size: 14px;
           color: #888888;
           line-height: 50px;
           text-shadow: 3px 3px 3px #000;
@@ -175,11 +177,14 @@ export default {
             color: #cccccc;
           }
         }
-        a.user-is-login{
-          color:#fff;
-          text-shadow: none;
-          &:hover{
-            color: #fff;
+        &.user-is-login{
+          margin-right: 10px;
+          a{
+            color:#fff;
+            text-shadow: none;
+            &:hover{
+              color: #fff;
+            }
           }
         }
       }
