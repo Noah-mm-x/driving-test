@@ -100,7 +100,13 @@ export default {
             return;
         }
       })
-      console.log(isChecked);
+      if(!isChecked){
+        this.$swal({
+          title:'未做选择',
+          type:'warning'
+        })
+        return false;
+      }
 
       if(this.currentIndex>=this.max){
         this.$swal({

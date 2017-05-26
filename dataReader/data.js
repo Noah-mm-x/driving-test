@@ -8,7 +8,7 @@ new Promise((resolve, reject) => {
 	var arr = [];
 	var url;
 	for(let i=1;i<num;i++){
-		url = 'http://mnks.jxedt.com/get_question?r=0.14942907941122408&index='+i;
+		url = 'http://mnks.jxedt.com/get_question?r=0.5327507597500334&index='+i;
 		request(url).then((data)=>{
 			arr.push(data);
 		}).then((result)=>{

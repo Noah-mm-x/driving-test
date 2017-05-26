@@ -65,7 +65,7 @@ export default {
         {icon:'icon-small-motorcycle',iconHover:'icon-small-hover-motorcycle',type:'摩托车',link:'/motorcycle'}
       ],
       boxList:[
-        {bk:'#fcc056',icon:'icon-test-order',con:'顺序练习',link:'/'},
+        {bk:'#fcc056',icon:'icon-test-order',con:'顺序练习',link:'/question'},
         {bk:'#fe7e4c',icon:'icon-test-random',con:'随机练习',link:'/'},
         {bk:'#6cceec',icon:'icon-test-chapter',con:'章节练习',link:'/'},
         {bk:'#fd6467',icon:'icon-test-special',con:'专项练习',link:'/'},
