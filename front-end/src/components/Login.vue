@@ -9,7 +9,7 @@
           </div>
           <div class="pwd-box">
             <i class="iconfont icon-123shouyexinxibaomi"></i>
-            <input type="text" placeholder="密码" v-model:value="pwd" @keyup.enter='login'>
+            <input type="password" placeholder="密码" v-model:value="pwd" @keyup.enter='login'>
           </div>
           <a class="jump-to-register" @click="linkToRegister" href="javascript:;">还没账号？注册</a>
           <a class="login-btn" @click="login"  href="javascript:;">登录</a>

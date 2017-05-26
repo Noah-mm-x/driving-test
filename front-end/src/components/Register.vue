@@ -60,6 +60,7 @@ export default {
               if(isConfirm) {
                 this.$router.push('/');
                 storage.setItem('username', this.name);
+                storage.setItem('userid', result.body.userId);
               }
             })
           }else{
