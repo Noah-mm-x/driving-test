@@ -16,8 +16,22 @@
           </li>
         </ul>
         <ul class="user-box">
-          <li v-if='!isLogin'><a href="javascript:;" @click="linkToLogin">登录</a></li>
-          <li v-if='!isLogin'><a href="javascript:;" @click="linkToRegister">注册</a></li>
+          <li v-if='!isLogin'>
+            <router-link
+                to="/user/register"
+                tag="a"
+              >
+            注册
+            </router-link>
+          </li>
+          <li v-if='!isLogin'>
+            <router-link
+              to="/user/login"
+              tag="a"
+            >
+            登录
+            </router-link>
+          </li>
           <li v-if='isLogin' class="user-is-login"><a href="javascript:;">您好，{{currentUser}}</a></li>
           <li v-if='isLogin' class="user-is-login"><a href="javascript:;">| 个人中心</a></li>
           <li v-if='isLogin' class="user-is-login"><a href="javascript:;" @click='logOut'>| 退出登录</a></li>
@@ -71,12 +85,6 @@ export default {
       }
   },
   methods:{
-    linkToLogin(){
-      this.$router.push({ name:'login'})
-    },
-    linkToRegister(){
-      this.$router.push({ name:'register'})
-    },
     logOut(){
       let storage = localStorage;
       storage.clear();
