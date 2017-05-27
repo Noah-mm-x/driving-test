@@ -47,5 +47,21 @@ router.post('/insertWrong',(req,res,next)=>{
 	    })
 	})
 
+router.post('/wrongData',(req,res,next)=>{
+		let con = connection();
+		con.oConnect().then(result=>{
+			return con.oQuery("SELECT w.* FROM `wrong` AS w  JOIN `users` AS u ON w.uid = u.id  WHERE w.uid=?",[req.body.uid]);
+		}).then(rows=>{
+			var result = rows[0];
+			console.log(rows.length);
+			if(rows.length){
+				res.json({state:stateCode.OK,content:result,max:rows.length}); 
+				con.end();
+			}
+		}).catch(error => {
+	        res.json({state: error.errno, msg: error.code});
+	    })
+	})
+
 
 module.exports = router;

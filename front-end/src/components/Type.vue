@@ -67,10 +67,10 @@ export default {
       boxList:[
         {bk:'#fcc056',icon:'icon-test-order',con:'顺序练习',link:'/question',type:'1'},
         {bk:'#fe7e4c',icon:'icon-test-random',con:'随机练习',link:'/question',type:'2'},
+        {bk:'#67e1c6',icon:'icon-test-error',con:'错题练习',link:'/question',type:'3'},
         {bk:'#6cceec',icon:'icon-test-chapter',con:'章节练习',link:'/',type:'/'},
         {bk:'#fd6467',icon:'icon-test-special',con:'专项练习',link:'/',type:'/'},
         {bk:'#f76f93',icon:'icon-test-simulation',con:'模拟考试',link:'/',type:'/'},
-        {bk:'#67e1c6',icon:'icon-test-error',con:'错题练习',link:'/',type:'/'},
       ]
     }
   },

@@ -58,7 +58,6 @@
 export default {
   data () {
     return {
-        apiUrl:'http://localhost:3000/question/car',
         wrongApiUrl:'http://localhost:3000/question/insertWrong',
         index:'1', //当前题,根据点击下一题而增长
         currentIndex:'1', //数据库中当前的题的位置
@@ -82,8 +81,14 @@ export default {
       $('input').prop({'disabled':''});
     },
     getData(){
+      let userid = localStorage.userid;
+      if(!userid) {
+        this.$router.push({name:'login'});
+        return false;
+      }
       this.$http.post(this.apiUrl,{
-        id:this.currentIndex
+        id:this.currentIndex,
+        uid:userid
       }).then( result =>{
         let [state,content,max] = [result.body.state,result.body.content,result.body.max];
         if(state == 1000){
@@ -143,19 +148,37 @@ export default {
         }).then( result =>{
           let state = result.body.state;
           if(state == 1000){
-            this.infoShow = 0;
-            this.wrongNum++;
+            
           }
         },res=>{
             this.$store.commit('showLoading');
         })
-        }
+
+        this.infoShow = 0;
+        this.wrongNum++;
+      }
         this.totalAnswerNum++;
     }
   },
   computed:{
+    apiUrl(){
+       return this.$route.query.type == '3' ? 'http://localhost:3000/question/wrongData' : 'http://localhost:3000/question/car' 
+    },
     title(){
-      return this.$route.query.type == 1 ? '顺序练习' : '随机练习'
+      switch (this.$route.query.type) {
+        case '1':
+          return '顺序练习'
+          break;
+        case '2':
+          return '随机练习'
+          break;
+        case '3':
+          return '错题练习'
+          break;;
+        default:
+          return '顺序练习'
+          break;
+      }
     },
     subjectType(){
       return this.data.type == '1' ? '判断题' : '选择题';
